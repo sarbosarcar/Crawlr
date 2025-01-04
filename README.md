@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-||||||| empty tree
-=======
 # Crawlr
 A web scraper with an LLM-powered document suggestion system that combines web crawling, data extraction, and advanced AI capabilities to recommend relevant documents.
 
@@ -21,18 +11,18 @@ A web scraper with an LLM-powered document suggestion system that combines web c
 # ✅ TODO LIST
 
 ### 1. Initial Setup
-- [ ] Create project directory structure
-- [ ] Initialize Git repository
-- [ ] Setup `.gitignore`
+- [x] Create project directory structure
+- [x] Initialize Git repository
+- [x] Setup `.gitignore`
 - [ ] Create `README.md` with project documentation
 
 ### 2. Frontend Development
-- [ ] Initialize React project
-- [ ] Setup Tailwind CSS
-- [ ] Create components:
-  - [ ] `SearchBar` with query input
-  - [ ] `SearchResults` display
-  - [ ] `DocumentCard` for individual results
+- [x] Initialize React project
+- [x] Setup Tailwind CSS
+- [x] Create components:
+  - [ ] `navbar` with query input
+  - [ ] `footer` display
+  continue the list
   - [ ] Loading states and error handling
 - [ ] Implement API service:
   - [ ] Axios setup
@@ -103,7 +93,3 @@ A web scraper with an LLM-powered document suggestion system that combines web c
 - [ ] Error handling improvements
 - [ ] Security enhancements
 
-
-
-
->>>>>>> f6388bdc02803609db38d66f0f2d9cb9062b3bb8
