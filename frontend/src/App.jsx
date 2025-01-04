@@ -1,31 +1,23 @@
-import React from 'react';
-import { Header } from './component/layout/header';
-import { SearchBar } from './component/search/searchbar';
-import { SearchResults } from './component/search/searchres';
-import { useState } from 'react';
 
+import './App.css'
 
-const App= () => {
-  const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+import Navbar from './components/Navbar'
+import Query from './components/Query'
+import Response from './components/Response'
+import Footer from './components/Footer'
+
+function App() {
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      <main className="container mx-auto px-4 py-8">
-        <SearchBar 
-          setSearchResults={setSearchResults}
-          setIsLoading={setIsLoading}
-          setError={setError}
-        />
-        <SearchResults 
-          results={searchResults}
-          isLoading={isLoading}
-          error={error}
-        />
-      </main>
+    <>
+    <div className='w-full h-full bg-gray-800 p-8 font-mono'>
+      <Navbar />
+      <Query className='flex justify-center items-center' />
+      <Response />
+      <Footer className='my-32' />
     </div>
-  );
-};
+    </>
+  )
+}
 
-export default App;
+export default App
