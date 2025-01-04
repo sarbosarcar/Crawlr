@@ -15,7 +15,7 @@ const Response = () => {
     };
 
     return (
-        <div className="w-full mx-auto p-16 bg-white rounded-lg dark:bg-gray-800 dark:text-white">
+        <div className="w-full mx-auto p-16 bg-white  dark:bg-gray-800 dark:text-white">
             <div className="">
                 <h2 className="text-2xl font-bold mb-4">LLM Response</h2>
                 <div className="w-full p-4 resize-none border-none align-top focus:outline-none focus:ring-0 sm:text-sm dark:bg-gray-800 dark:text-white">
