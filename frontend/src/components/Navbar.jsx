@@ -12,7 +12,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(true)
 
   // Update the class on the `html` element
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Navbar() {
   }, [isDarkMode])
 
   return (
-    <Disclosure as="nav" className="bg-gray-600 dark:bg-gray-800">
+    <Disclosure as="nav" className="bg-gray-600 dark:bg-gray-600 rounded-lg">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -54,9 +54,9 @@ export default function Navbar() {
             {/* Toggle Button */}
             <button
               onClick={() => setIsDarkMode(!isDarkMode)}
-              className="bg-gray-300 dark:bg-white-700 text-black-800 dark:text-black-200 px-4 py-2  text-sm font-medium hover:bg-gray-400 dark:hover:bg-gray-600"
+              className="bg-gray-900 text-black-800 dark:text-black-200 px-4 py-2 text-sm font-medium hover:bg-gray-700 rounded-lg"
             >
-              {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+              {isDarkMode ? '☀️' : '🌙'}
             </button>
           </div>
         </div>

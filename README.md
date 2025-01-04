@@ -2,13 +2,13 @@
 # Crawlr
 A web scraper with an LLM-powered document suggestion system that combines web crawling, data extraction, and advanced AI capabilities to recommend relevant documents.
 
-# PLAN
+# Application Architecture
 ![image](https://github.com/user-attachments/assets/2fd31dc0-a335-41b2-8759-4fe6996d43bb)
 
 
 ---
 
-# ✅ TODO LIST
+# ✅ To-do List
 
 ### 1. Initial Setup
 - [x] Create project directory structure
@@ -20,8 +20,8 @@ A web scraper with an LLM-powered document suggestion system that combines web c
 - [x] Initialize React project
 - [x] Setup Tailwind CSS
 - [x] Create components:
-  - [ ] `navbar` with query input
-  - [ ] `footer` display
+  - [x] `navbar` with query input
+  - [x] `footer` display
   continue the list
   - [ ] Loading states and error handling
 - [ ] Implement API service:

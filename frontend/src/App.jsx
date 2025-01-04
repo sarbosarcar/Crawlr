@@ -10,7 +10,7 @@ function App() {
 
   return (
     <>
-    <div className='w-full h-full bg-gray-800 p-8 font-mono'>
+    <div className='w-full h-full bg-white dark:bg-gray-800 p-8 font-mono'>
       <Navbar />
       <Query className='flex justify-center items-center' />
       <Response />
