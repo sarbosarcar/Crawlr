@@ -5,11 +5,11 @@ export default function Query() {
   const [query, setQuery] = useState("");
 
   return (
-    <div className="w-full mx-auto p-16 bg-white rounded-lg dark:bg-gray-800 dark:text-white">
+    <div className="w-full mx-auto p-16 bg-white  dark:bg-gray-800 dark:text-white">
       <label htmlFor="OrderNotes" className="sr-only">Enter Query</label>
 
       <div
-        className="overflow-hidden rounded-lg border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 dark:border-gray-700"
+        className="overflow-hidden border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 dark:border-gray-700"
       >
         {/* Bind the textarea value to the state */}
         <textarea

@@ -1,4 +1,5 @@
 import { Disclosure } from '@headlessui/react'
+import { useState, useEffect } from 'react'
 
 const navigation = [
   { name: 'Home', href: '#', current: false },
@@ -11,13 +12,22 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  // Update the class on the `html` element
+  useEffect(() => {
+    const root = window.document.documentElement
+    if (isDarkMode) {
+      root.classList.add('dark')
+    } else {
+      root.classList.remove('dark')
+    }
+  }, [isDarkMode])
+
   return (
-    <Disclosure as="nav" className="bg-gray-600 rounded-lg">
+    <Disclosure as="nav" className="bg-gray-600 dark:bg-gray-800">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
-          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
-    
-          </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
               <p className="text-white font-bold text-2xl">Crawlr</p>
@@ -40,7 +50,15 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-          
+          <div className="flex items-center">
+            {/* Toggle Button */}
+            <button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="bg-gray-300 dark:bg-white-700 text-black-800 dark:text-black-200 px-4 py-2  text-sm font-medium hover:bg-gray-400 dark:hover:bg-gray-600"
+            >
+              {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+            </button>
+          </div>
         </div>
       </div>
     </Disclosure>
