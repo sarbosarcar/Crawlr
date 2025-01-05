@@ -9,7 +9,7 @@ export default function Query() {
       <label htmlFor="OrderNotes" className="sr-only">Enter Query</label>
 
       <div
-        className="overflow-hidden border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 dark:border-gray-700"
+        className="overflow-hidden border rounded-lg border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600 dark:border-gray-700"
       >
         {/* Bind the textarea value to the state */}
         <textarea
