@@ -54,3 +54,9 @@ You’ll be prompted for a research query. The assistant will:
 ├── requirements.txt          # Dependencies
 └── .env                      # Environment variables  
 ```
+
+## 🤖 LLMs used
+
+- gemma2-9b-it
+- meta-llama/llama-4-scout-17b-16e-instruct
+- llama-3.3-70b-versatile
