@@ -1,0 +1,1 @@
+The provided context is incomplete and doesn't contain information about the new Apple MacBook Air M4. To give you the features of the new MacBook Air M4, I need more context. Please provide me with the relevant details about the device.
