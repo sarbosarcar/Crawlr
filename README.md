@@ -1,6 +1,6 @@
-# 🧠 AI Research Assistant
+# 🕸️ Crawlr
 
-This project automates web research using `CrewAI`, `Tavily`, and `Trafilatura` with structured multi-agent reasoning. It includes web search, content parsing, context synthesis, and final summarization using an LLM.
+This project implements a web research based agentic RAG application using `CrewAI`, `Tavily`, and `Trafilatura` with structured multi-agent reasoning. It includes web search, content parsing, context synthesis, and final summarization using an LLM.
 
 ## 🔧 Features
 
@@ -8,8 +8,7 @@ This project automates web research using `CrewAI`, `Tavily`, and `Trafilatura` 
 - **Content Fetcher Agent** to download & parse articles with `trafilatura`  
 - **Context Generator** saving rich content to `context_output.md`  
 - **Final Answer Agent** generating summaries from parsed context  
-- Fully modular `CrewAI` agent-task pipeline  
-- Custom LLM support via Groq’s API (`gemma2-9b-it`)
+- Fully modular `CrewAI` agent-task pipeline
 
 ---
 
