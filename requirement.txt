@@ -1,6 +1,0 @@
-crewai
-tavily-python
-openai
-langchain
-pydantic
-python-dotenv

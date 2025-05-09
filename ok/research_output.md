@@ -1,3 +1,0 @@
-Biology is the study of life in all its forms. It encompasses a vast range of topics, from the molecular level to the ecosystem level. Physiology, on the other hand, is the study of how living organisms function. It focuses on the mechanisms that allow organisms to survive and reproduce. 
-
-Zoology is the branch of biology that deals with the animal kingdom.  Zoologists study the behavior, physiology, classification, origin, and distribution of animals.
