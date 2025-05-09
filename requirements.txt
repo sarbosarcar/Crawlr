@@ -7,3 +7,6 @@ python-dotenv
 langchain_openai
 trafilatura
 langchain-community
+lxml_html_clean
+sentence_transformers
+textstat

@@ -120,6 +120,9 @@ def difference(input_date, lambda_=0.15):
 def recency(dates, lambda_=0.15):
   return np.mean([difference(date, lambda_) for date in dates])
 
+def recency_diff(days, lambda_=0.15):
+  return np.mean([np.exp(-lambda_*diff) for diff in days])
+
 #@title Scaled Entropy
 def scaled_entropy(response_text, model_name="sentence-transformers/all-MiniLM-L6-v2"):
     # Load model and tokenizer
@@ -204,5 +207,3 @@ def parse_multiple_text_blocks(text):
       })
 
     return parsed_entries
-
-

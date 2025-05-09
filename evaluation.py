@@ -7,7 +7,7 @@ from agent import form_crew
 from evaluation_of_responses import (
     scaled_entropy, contextuality, recency, alpha,
     coherence, groundedness, readability, beta,
-    gamma, omega, parse_multiple_text_blocks
+    gamma, omega, parse_multiple_text_blocks, recency_diff
 )
 
 def ensure_string(text) -> str:
@@ -20,7 +20,7 @@ def ensure_string(text) -> str:
         return ""
     return str(text)
 
-def run_full_pipeline(query: str) -> dict:
+def run_full_pipeline(query: str, model: str) -> dict:
     """Run the full pipeline and return results with metrics"""
     start_time = time.time()
     
@@ -28,14 +28,14 @@ def run_full_pipeline(query: str) -> dict:
     query = ensure_string(query)
     
     # Run the agent pipeline
-    crew = form_crew(query)
+    crew = form_crew(query, model)
     result = crew.kickoff()
     response = ensure_string(result)
     latency = time.time() - start_time
 
     # Read context from all three files
     context = ""
-    files = ["context_output.md", "research_output.md", "search_output.md"]
+    files = ["context_output.md"]#, "research_output.md", "search_output.md"]
     for file_name in files:
         try:
             with open(file_name, "r", encoding='utf-8') as f:
@@ -48,8 +48,9 @@ def run_full_pipeline(query: str) -> dict:
     parsed_context = parse_multiple_text_blocks(context)
     dates = [extract_publication_date(source.get('content', '')) for source in parsed_context]
     dates = [d for d in dates if d is not None]
-
+    print(parsed_context, dates)
     return {
+        'model': model,
         'query': query,
         'response': response,
         'context': context,
@@ -87,7 +88,9 @@ def calculate_all_metrics(query: str, response: str, context: str, dates: List[s
 
     E = scaled_entropy(response)
     T = contextuality(query, context)
-    r = recency(dates, 0.005) if dates else 0.5
+    time_diff = (input("Enter time difference of source (in days) (space separated): "))
+    expo = float(input("Enter exponential value: "))
+    r = recency_diff([int(td) for td in time_diff.split()], expo)
     A = 0.9  # Placeholder for accuracy
 
     alpha_val = alpha(A, T, r)
@@ -139,6 +142,7 @@ def save_to_readme(results: dict, filename: str = "EVALUATION.md"):
                 f.write("| ω | Omega Score |\n\n")
                 f.write("---\n\n")
 
+            f.write(f"## Model\n```\n{results['model']}\n```\n\n")
             f.write(f"## Query\n```\n{results['query']}\n```\n\n")
             f.write("## Response\n```\n")
             f.write(results['response'][:2000])
@@ -164,6 +168,8 @@ def save_to_readme(results: dict, filename: str = "EVALUATION.md"):
     except Exception as e:
         print(f"❌ Error saving to README: {str(e)}")
 
+
+
 def main():
     print("🚀 Evaluation Pipeline - Enter queries to evaluate (type 'exit' to quit)")
     
@@ -175,34 +181,38 @@ def main():
         print("\n⏳ Running evaluation pipeline...")
 
         try:
-            # Measure time for each query
-            start_time = time.time()
-            results = run_full_pipeline(query)
-            latency = results['latency']
+            for model in ["gemma2-9b-it", "meta-llama/llama-4-scout-17b-16e-instruct", "llama-3.3-70b-versatile"]:
+                # Measure time for each query
+                start_time = time.time()
+                results = run_full_pipeline(query, model)
+                latency = results['latency']
 
-            save_to_readme(results)
+                save_to_readme(results)
 
-            # Print evaluation summary and latency info
-            print("\n✅ Evaluation Complete!")
-            print(f"\n📋 Results saved to EVALUATION.md with this structure:")
+                # Print evaluation summary and latency info
+                print("\n✅ Evaluation Complete!")
+                print(f"\n📋 Results saved to EVALUATION.md with this structure:")
 
-            print(f"""
-=======================================
-QUERY:
-{results['query'][:100]}...
+                print(f"""
+    =======================================
+    MODEL:
+    {model}
 
-RESPONSE:
-{results['response'][:100]}...
+    QUERY:
+    {results['query'][:100]}...
 
-METRICS:
-- Basic: {', '.join([f"{k}: {v}" for k,v in results['metrics']['Basic Metrics'].items()][:3])}...
-- Composite: Ω = {results['metrics']['Composite Scores']['Omega (ω = (sα+(1-s)β)^γ)']}
-=======================================
+    RESPONSE:
+    {results['response'][:100]}...
 
-Latency: {latency:.2f} seconds
-Recency: {results['metrics']['Basic Metrics']['Recency (r)']}
-=======================================
-""")
+    METRICS:
+    - Basic: {', '.join([f"{k}: {v}" for k,v in results['metrics']['Basic Metrics'].items()][:3])}...
+    - Composite: Ω = {results['metrics']['Composite Scores']['Omega (ω = (sα+(1-s)β)^γ)']}
+    =======================================
+
+    Latency: {latency:.2f} seconds
+    Recency: {results['metrics']['Basic Metrics']['Recency (r)']}
+    =======================================
+    """)
         except Exception as e:
             print(f"\n❌ Error during evaluation: {str(e)}")
 
