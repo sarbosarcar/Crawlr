@@ -57,20 +57,20 @@ def fetch_and_format_content(urls: List[str]) -> str:
             output.append(f"## Source: {url}\n\n⚠️ Failed to fetch: {str(e)}\n")
     return "\n---\n".join(output)
 
-def set_llm() -> ChatOpenAI:
+def set_llm(model: str) -> ChatOpenAI:
     if not GROQ_API_KEY:
         raise ValueError("Groq API key not found")
 
     return ChatOpenAI(
-        model="groq/gemma2-9b-it",
+        model=f"groq/{model}",
         api_key=GROQ_API_KEY,
         base_url="https://api.groq.com/openai/v1",
         temperature=0.5,
         max_tokens=1024
     )
 
-def form_crew(query: str) -> Crew:
-    llm = set_llm()
+def form_crew(query: str, model: str) -> Crew:
+    llm = set_llm(model)
 
     search_agent = Agent(
         role="Web Search Agent",

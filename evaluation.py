@@ -7,7 +7,8 @@ from agent import form_crew
 from evaluation_of_responses import (
     scaled_entropy, contextuality, recency, alpha,
     coherence, groundedness, readability, beta,
-    gamma, omega, parse_multiple_text_blocks
+    gamma, omega, parse_multiple_text_blocks,
+    recency_diff
 )
 
 def ensure_string(text) -> str:
@@ -20,7 +21,7 @@ def ensure_string(text) -> str:
         return ""
     return str(text)
 
-def run_full_pipeline(query: str) -> dict:
+def run_full_pipeline(query: str, model: str) -> dict:
     """Run the full pipeline and return results with metrics"""
     start_time = time.time()
     
@@ -28,14 +29,14 @@ def run_full_pipeline(query: str) -> dict:
     query = ensure_string(query)
     
     # Run the agent pipeline
-    crew = form_crew(query)
+    crew = form_crew(query, model)
     result = crew.kickoff()
     response = ensure_string(result)
     latency = time.time() - start_time
 
     # Read context from all three files
     context = ""
-    files = ["context_output.md", "research_output.md", "search_output.md"]
+    files = ["context_output.md"] #, "research_output.md", "search_output.md"]
     for file_name in files:
         try:
             with open(file_name, "r", encoding='utf-8') as f:
@@ -52,6 +53,7 @@ def run_full_pipeline(query: str) -> dict:
     return {
         'query': query,
         'response': response,
+        'model': model,
         'context': context,
         'dates': dates,
         'latency': latency,
@@ -79,6 +81,7 @@ def extract_publication_date(content: str) -> Optional[str]:
                     continue
     return None
 
+
 def calculate_all_metrics(query: str, response: str, context: str, dates: List[str], latency: float) -> dict:
     """Calculate all evaluation metrics"""
     query = ensure_string(query)
@@ -87,7 +90,10 @@ def calculate_all_metrics(query: str, response: str, context: str, dates: List[s
 
     E = scaled_entropy(response)
     T = contextuality(query, context)
-    r = recency(dates, 0.005) if dates else 0.5
+    #r = recency(dates, 0.005) if dates else 0.5
+    days = list(map(int, input("Enter age of sources (in days): ").split()))
+    expo = float(input("Enter exponent: "))
+    r = recency_diff(days, expo)
     A = 0.9  # Placeholder for accuracy
 
     alpha_val = alpha(A, T, r)
@@ -139,6 +145,7 @@ def save_to_readme(results: dict, filename: str = "EVALUATION.md"):
                 f.write("| ω | Omega Score |\n\n")
                 f.write("---\n\n")
 
+            f.write(f"## Model\n```\n{results['model']}\n```\n\n")
             f.write(f"## Query\n```\n{results['query']}\n```\n\n")
             f.write("## Response\n```\n")
             f.write(results['response'][:2000])
@@ -168,6 +175,11 @@ def main():
     print("🚀 Evaluation Pipeline - Enter queries to evaluate (type 'exit' to quit)")
     
     while True:
+        print("1. Gemma2 9B\n2. Llama4 17B\n3. Llama3 70B")
+        model = int(input("Enter choice of model: "))
+
+        models = ["gemma2-9b-it", "llama-3.1-8b-instant", "llama-3.3-70b-versatile"]
+
         query = input("\n🔍 Enter your query: ").strip()
         if query.lower() in ('exit', 'quit'):
             break
@@ -177,7 +189,7 @@ def main():
         try:
             # Measure time for each query
             start_time = time.time()
-            results = run_full_pipeline(query)
+            results = run_full_pipeline(query, models[model-1])
             latency = results['latency']
 
             save_to_readme(results)
